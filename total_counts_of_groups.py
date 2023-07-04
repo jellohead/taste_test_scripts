@@ -3,19 +3,29 @@
 import pandas as pd
 import pyreadstat
 
-df, meta = pyreadstat.read_sav(
+# Read SPSS .sav file
+# data, meta = pyreadstat.read_sav('input_data.sav')
+data, meta = pyreadstat.read_sav(
     "../../SPSS-Python/spss-datasets/Taste_Test_Data_File.sav"
 )
 
-# Define the data
-variable_list = ["TTQ3.1_1", "TTQ3.1_2", "TTQ3.1_3"]
+# List of variable names
+values_list = ["TTQ3.1_1", "TTQ3.1_2", "TTQ3.1_3"]
 
+# Select variables from the SPSS dataset
+selected_variables = [
+    variable for variable in meta.column_names if variable in values_list
+]
 
-for variable in variable_list:
-    df_list += df[variable]
+# Create a new dataframe by concatenating rows
+combined_df = pd.concat(
+    [data[selected_var].rename(selected_var) for selected_var in selected_variables],
+    axis=0,
+    ignore_index=True,
+).dropna(axis=0)
+responses = pd.concat([Q1, Q2, Q3], axis=0, ignore_index=True).dropna(axis=0)
+print(combined_df)
 
-# Combine the responses into a single list
-responses = pd.concat([], axis=0, ignore_index=True).dropna(axis=0)
 
 # count responses by variable value
 value_counts = responses.value_counts().sort_index()

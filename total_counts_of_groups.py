@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-
 import pandas as pd
 import pyreadstat
 
 # Read SPSS .sav file
-# data, meta = pyreadstat.read_sav('input_data.sav')
 data, meta = pyreadstat.read_sav(
     "../../SPSS-Python/spss-datasets/Taste_Test_Data_File.sav"
 )
@@ -23,13 +21,9 @@ combined_df = pd.concat(
     axis=0,
     ignore_index=True,
 ).dropna(axis=0)
-responses = pd.concat([Q1, Q2, Q3], axis=0, ignore_index=True).dropna(axis=0)
-print(combined_df)
-
 
 # count responses by variable value
-value_counts = responses.value_counts().sort_index()
-# print(value_counts)
+value_counts = combined_df.value_counts().sort_index()
 
 # Calculate the percentages
 percentages = (value_counts / value_counts.sum()) * 100
@@ -41,4 +35,7 @@ for value, count in value_counts.items():
 
 # get total number of counts
 total_counts = value_counts.sum()
-print(f"Total counts: {total_counts}")
+print(f"Total_counts: {total_counts}")
+
+combined_df.to_excel("combined_data.xlsx", index=False)
+print("Data exported to combined_data.xlsx successfully.")

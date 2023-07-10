@@ -24,32 +24,19 @@ combined_df = pd.concat(
     axis=0,
     ignore_index=True,
 ).dropna(axis=0)
-# print(combined_df)
-
-# Apply value formats to get meta variable value labels as rows
-# value_formats = meta.variable_value_labels
-# combined_df = pd.DataFrame({
-#     variable: df_copy[variable].apply(lambda x: value_formats[variable].get(x, x)) for variable in selected_variables}
-# )
 
 # count responses by variable value
-# value_counts = responses.value_counts().sort_index()
 value_counts = combined_df.value_counts(normalize=True).sort_index()
-print(value_counts)
-
-# Calculate the percentages
-# percentages = (value_counts / value_counts.sum()) * 100
-
-# Print the value counts and percentages
-# for value, count in value_counts.items():
-# for value, count in combined_df.items():
-# percentage = percentages[value]
-# print(f"{value}: {count} ({percentages[value]:.0f}%)")
-# print(f"{value}: {count}")
+total_counts = combined_df.value_counts().sum()
 
 # get total number of counts
-total_counts = value_counts.sum()
-print(f"Total counts: {total_counts}")
+# total_counts = value_counts.sum()
+# print(value_counts)
+# print(f"Total counts: {total_counts}")
+print(f"{value_counts}\nTotal counts: {total_counts}")
+# print(f"Total counts: {total_counts}")
 
 # todo
 # Save to Excel
+# result = pd.concat([value_counts, total_counts])
+# print(result)

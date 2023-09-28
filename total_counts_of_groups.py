@@ -24,7 +24,7 @@ combined_df = pd.concat(
 
 # count responses by variable value
 value_counts = combined_df.value_counts().sort_index()
-
+print(value_counts)
 # Calculate the percentages
 percentages = (value_counts / value_counts.sum()) * 100
 
@@ -38,4 +38,5 @@ total_counts = value_counts.sum()
 print(f"Total_counts: {total_counts}")
 
 combined_df.to_excel("combined_data.xlsx", index=False)
+# total_counts.to_excel("combined_data.xlsx", index=False)
 print("Data exported to combined_data.xlsx successfully.")
